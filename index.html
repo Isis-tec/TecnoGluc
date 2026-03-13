@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TecnoGluc | Glucómetro Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4a7c6f;
+            --primary-dark: #2d5247;
+            --accent: #90be6d;
+            --accent-light: #c8e6b4;
+            --danger: #e63946;
+            --warning: #f4a261;
+            --bg: #f4f6f9;
+            --white: #ffffff;
+            --text: #1a1a2e;
+            --text-light: #555;
+            --card-bg: #e8e8e8;
+            --border: #ccc;
+            --shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Nunito', Arial, Helvetica, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-circle {
+            width: 52px;
+            height: 52px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 2px solid var(--accent);
+        }
+
+        .header-brand h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255,255,255,0.35);
+            border-color: white;
+        }
+
+        /* ── SUBHEADER ── */
+        .subheader {
+            background-color: var(--accent);
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #1a1a1a;
+        }
+
+        /* ── MAIN CONTAINER ── */
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            background: rgb(228, 212, 212);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            flex: 1;
+        }
+
+        /* ── PAGES ── */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ── FORMS ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .info-grid label {
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .info-grid input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            font-family: inherit;
+            font-size: 0.95rem;
+            border-radius: 6px;
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background-color: var(--primary-dark); }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: #1a1a1a;
+            border-radius: 6px;
+        }
+
+        .btn-accent:hover { background-color: #7aaa58; }
+
+        .btn-full { width: 100%; margin-top: 10px; border-radius: 6px; padding: 12px; }
+
+        .btn-link {
+            background: none;
+            border: none;
+            color: #4a6cf7;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-link:hover { text-decoration: underline; }
+
+        /* ── LOGIN / REGISTER CARD ── */
+        .auth-card {
+            max-width: 520px;
+            margin: 30px auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 36px 40px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .auth-card .logo-circle {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 12px auto;
+            font-size: 30px;
+            border: 3px solid var(--primary);
+        }
+
+        .auth-card h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: var(--primary-dark);
+        }
+
+        .auth-card .subtitle {
+            font-weight: 700;
+            margin-bottom: 22px;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .auth-card .form-group { text-align: left; }
+
+        .auth-card .form-group input {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .google-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            font-size: 20px;
+            margin: 8px auto;
+            transition: box-shadow 0.2s;
+        }
+
+        .google-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
+        .auth-footer {
+            margin-top: 14px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* ── DEVICE / MEASUREMENT ── */
+        .device-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .device-row label { font-weight: bold; white-space: nowrap; }
+
+        .device-row input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            font-family: inherit;
+            background: var(--card-bg);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 4px;
+            background: var(--card-bg);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .status-on { color: var(--primary); }
+        .status-off { color: var(--danger); }
+
+        .measures-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .measure-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .measure-card .icon { font-size: 40px; margin-bottom: 8px; }
+        .measure-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
+
+        .measure-input-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .measure-input-row input {
+            width: 120px;
+            padding: 8px;
+            border: 1px solid var(--border);
+            text-align: center;
+            font-size: 1rem;
+            font-family: inherit;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .measure-input-row span { font-weight: 600; font-size: 0.85rem; color: var(--text-light); }
+
+        /* Gauge */
+        .gauge-wrap { position: relative; width: 130px; margin: 0 auto; }
+
+        .gauge-wrap svg { width: 100%; }
+
+        .gauge-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .gauge-label .good { color: var(--primary); }
+        .gauge-label .critical { color: var(--danger); }
+
+        /* Datetime boxes */
+        .datetime-boxes {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .dt-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: inline-block;
+        }
+
+        /* ── CHARTS PAGE ── */
+        .chart-section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .chart-header .chart-icon { font-size: 36px; margin-right: 10px; }
+
+        .refresh-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text);
+            transition: transform 0.4s;
+        }
+
+        .refresh-btn:hover { transform: rotate(180deg); }
+
+        .chart-info h3 { font-weight: 700; font-size: 1rem; }
+        .chart-info span { font-size: 0.8rem; color: var(--text-light); }
+
+        canvas { max-width: 100%; }
+
+        /* ── PROFILE PAGE ── */
+        .profile-card {
+            max-width: 560px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px 36px;
+            position: relative;
+        }
+
+        .profile-avatar {
+            text-align: center;
+            font-size: 64px;
+            margin-bottom: 10px;
+        }
+
+        .profile-refresh {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.4s;
+        }
+
+        .profile-refresh:hover { transform: rotate(180deg); }
+
+        .profile-field {
+            margin-bottom: 14px;
+        }
+
+        .profile-field label { font-weight: bold; display: block; margin-bottom: 4px; font-size: 0.9rem; }
+
+        .profile-field-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-field-row input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            font-family: inherit;
+            background: white;
+            border-radius: 6px;
+        }
+
+        /* ── CHAT BUTTON ── */
+        .chat-fab {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            width: 54px;
+            height: 54px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            transition: background 0.2s;
+            z-index: 100;
+        }
+
+        .chat-fab:hover { background: var(--primary-dark); }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: var(--text-light);
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── TABLE (lista) ── */
+        table { width: 100%; border-collapse: collapse; }
+        table th { background-color: var(--accent); padding: 10px; border: 1px solid var(--border); }
+        table td { padding: 8px; border: 1px solid var(--border); text-align: center; }
+        table input { width: 95%; padding: 4px; }
+        table select { padding: 4px; font-family: inherit; }
+
+        /* ── ALERT ── */
+        .alert {
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .alert-success { background: var(--accent-light); color: var(--primary-dark); }
+        .alert-danger  { background: #fde8ea; color: var(--danger); }
+
+        @media (max-width: 600px) {
+            .info-grid, .measures-grid { grid-template-columns: 1fr; }
+            .container { width: 98%; padding: 14px; }
+            .auth-card { padding: 24px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ HEADER ══════════════════════════════ -->
+<div class="header" id="mainHeader" style="display:none;">
+    <div class="header-brand">
+        <div class="logo-circle">❤️</div>
+        <h1>TecnoGluc</h1>
+    </div>
+    <div class="header-nav">
+        <button class="nav-btn active" onclick="showPage('home')" title="Inicio">🏠</button>
+        <button class="nav-btn" onclick="showPage('charts')" title="Estadísticas">📊</button>
+        <button class="nav-btn" onclick="showPage('profile')" title="Perfil">👤</button>
+    </div>
+</div>
+
+<!-- ══════════════════════════════ LOGIN ══════════════════════════════ -->
+<div id="page-login" class="page active" style="background:var(--bg);min-height:100vh;display:flex;flex-direction:column;">
+    <div class="header">
+        <div class="header-brand">
+            <div class="logo-circle">❤️</div>
+            <h1>TecnoGluc</h1>
+        </div>
+    </div>
+
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:20px;">
+        <div class="auth-card">
+            <div class="logo-circle">❤️</div>
+            <h2>TecnoGluc</h2>
+            <p class="subtitle">Ingresa tus datos para identificarte</p>
+
+            <div class="form-group">
+                <label>Correo electrónico:</label>
+                <input type="email" id="loginEmail" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña:</label>
+                <input type="password" id="loginPass" placeholder="••••••••">
+            </div>
+
+            <button class="btn btn-accent btn-full" onclick="doLogin()">Iniciar Sesión</button>
+
+            <button class="google-btn" title="Iniciar con Google">
+                <span style="color:#DB4437;font-weight:900;font-size:18px;">G</span>
+            </button>
+
+            <p class="auth-footer">
+                ¿No tienes cuenta?
+                <button class="btn-link" onclick="showPage('register')">Registrarse</button>
+            </p>
+        </div>
+    </div>
+
+    <div class="footer">Derechos Reservados. TecnoGluc 2024</div>
+</div>
+
+<!-- ══════════════════════════════ REGISTER ══════════════════════════════ -->
+<div id="page-register" class="page" style="background:var(--bg);min-height:100vh;display:flex;flex-direction:column;">
+    <div class="header">
+        <div class="header-brand">
+            <div class="logo-circle">❤️</div>
+            <h1>TecnoGluc</h1>
+        </div>
+    </div>
+
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:20px;">
+        <div class="auth-card">
+            <p class="subtitle">Ingresa tus datos para identificarte</p>
+
+            <div class="form-group">
+                <label>Nombre:</label>
+                <input type="text" placeholder="Tu nombre completo">
+            </div>
+            <div class="form-group">
+                <label>Correo electrónico:</label>
+                <input type="email" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña:</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            <div class="form-group">
+                <label>Fecha de Nacimiento:</label>
+                <input type="date">
+            </div>
+
+            <button class="google-btn" title="Registrar con Google">
+                <span style="color:#DB4437;font-weight:900;font-size:18px;">G</span>
+            </button>
+
+            <button class="btn btn-accent btn-full" onclick="doLogin()">Registrarse</button>
+
+            <p class="auth-footer">
+                ¿Ya tienes cuenta?
+                <button class="btn-link" onclick="showPage('login')">Iniciar sesión</button>
+            </p>
+        </div>
+    </div>
+
+    <div class="footer">Derechos Reservados. TecnoGluc 2024</div>
+</div>
+
+<!-- ══════════════════════════════ HOME (Medición) ══════════════════════════════ -->
+<div id="page-home" class="page">
+    <div class="subheader">Conectar Dispositivo</div>
+    <div class="container">
+
+        <div class="device-row">
+            <label>Conectar Dispositivo:</label>
+            <input type="text" placeholder="ID del dispositivo..." id="deviceId">
+            <button class="btn btn-accent" onclick="toggleConnect()">Conectar</button>
+        </div>
+
+        <div class="device-row">
+            <label>Estado:</label>
+            <div class="status-badge">
+                <span class="status-on" id="statusOn">Conectado</span>
+                <span>/</span>
+                <span class="status-off" id="statusOff">Desconectado</span>
+            </div>
+        </div>
+
+        <div class="measures-grid">
+            <!-- Glucosa -->
+            <div class="measure-card">
+                <div class="icon">🩺</div>
+                <h3>Glucosa:</h3>
+                <div class="measure-input-row">
+                    <input type="number" id="glucosaVal" placeholder="---" oninput="updateGauge(this.value)">
+                    <span>gl/dhl</span>
+                </div>
+                <p style="font-weight:700;margin-bottom:8px;">Medición</p>
+                <div class="gauge-wrap">
+                    <svg viewBox="0 0 120 70">
+                        <!-- Track -->
+                        <path d="M10 60 A 50 50 0 0 1 110 60" fill="none" stroke="#ddd" stroke-width="12" stroke-linecap="round"/>
+                        <!-- Color gradient arc segments -->
+                        <path d="M10 60 A 50 50 0 0 1 35 18" fill="none" stroke="#90be6d" stroke-width="12" stroke-linecap="round"/>
+                        <path d="M35 18 A 50 50 0 0 1 60 10" fill="none" stroke="#f4a261" stroke-width="12" stroke-linecap="round"/>
+                        <path d="M60 10 A 50 50 0 0 1 110 60" fill="none" stroke="#e63946" stroke-width="12" stroke-linecap="round"/>
+                        <!-- Needle -->
+                        <line id="gaugeNeedle" x1="60" y1="60" x2="60" y2="18" stroke="#333" stroke-width="3" stroke-linecap="round"
+                              style="transform-origin:60px 60px; transform:rotate(-80deg); transition:transform 0.5s;"/>
+                        <circle cx="60" cy="60" r="5" fill="#333"/>
+                    </svg>
+                    <div class="gauge-label">
+                        <span class="good">Bueno</span>
+                        <span class="critical">Crítico</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Presión Arterial -->
+            <div class="measure-card">
+                <div class="icon">💓</div>
+                <h3>Presión Arterial:</h3>
+                <div class="measure-input-row">
+                    <input type="text" placeholder="120/80">
+                </div>
+                <p style="font-weight:700;margin-bottom:12px;">Fecha y Hora:</p>
+                <div class="datetime-boxes">
+                    <div class="dt-box"></div>
+                    <div class="dt-box"></div>
+                    <div class="dt-box"></div>
+                    <div class="dt-box"></div>
+                    <div class="dt-box"></div>
+                    <div class="dt-box"></div>
+                </div>
+                <p id="datetimeDisplay" style="font-size:0.8rem;margin-top:8px;color:var(--text-light);font-weight:600;"></p>
+            </div>
+        </div>
+
+        <div style="text-align:center;">
+            <button class="btn btn-accent" style="padding:12px 48px;font-size:1rem;" onclick="saveReading()">Guardar</button>
+        </div>
+        <div id="saveAlert" class="alert alert-success" style="margin-top:14px;display:none;">✅ Medición guardada correctamente.</div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════ CHARTS ══════════════════════════════ -->
+<div id="page-charts" class="page">
+    <div class="subheader">Historial de Mediciones</div>
+    <div class="container">
+
+        <!-- Glucosa Chart -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div style="display:flex;align-items:center;">
+                    <span class="chart-icon">🩺</span>
+                    <div class="chart-info">
+                        <h3>Glucosa:</h3>
+                        <span>gl/dhl</span>
+                    </div>
+                </div>
+                <button class="refresh-btn" onclick="refreshCharts()">🔄</button>
+            </div>
+            <canvas id="glucosaChart" height="120"></canvas>
+            <p style="text-align:right;font-size:0.8rem;color:var(--text-light);margin-top:4px;">Fecha y hora</p>
+        </div>
+
+        <!-- Presión Chart -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div style="display:flex;align-items:center;">
+                    <span class="chart-icon">💓</span>
+                    <div class="chart-info">
+                        <h3>Presión Sanguínea:</h3>
+                        <span>gl/dhl</span>
+                    </div>
+                </div>
+                <button class="refresh-btn" onclick="refreshCharts()">🔄</button>
+            </div>
+            <canvas id="presionChart" height="120"></canvas>
+            <p style="text-align:right;font-size:0.8rem;color:var(--text-light);margin-top:4px;">Fecha y hora</p>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════ PROFILE ══════════════════════════════ -->
+<div id="page-profile" class="page">
+    <div class="subheader">Mi Perfil</div>
+    <div class="container">
+        <div class="profile-card">
+            <button class="profile-refresh" onclick="this.style.transform='rotate(360deg)'">🔄</button>
+            <div class="profile-avatar">👩</div>
+
+            <div class="profile-field">
+                <label>Nombre:</label>
+                <div class="profile-field-row">
+                    <input type="text" placeholder="Tu nombre">
+                    <button class="btn-link">Cambiar Nombre</button>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Correo electrónico:</label>
+                <input type="email" placeholder="correo@ejemplo.com" style="width:100%;padding:8px 12px;border:1px solid var(--border);font-family:inherit;background:white;border-radius:6px;">
+            </div>
+
+            <div class="profile-field">
+                <label>Contraseña:</label>
+                <div class="profile-field-row">
+                    <input type="password" placeholder="••••••••">
+                    <button class="btn-link">Cambiar contraseña</button>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Fecha de Nacimiento:</label>
+                <input type="date" style="width:100%;padding:8px 12px;border:1px solid var(--border);font-family:inherit;background:white;border-radius:6px;">
+            </div>
+
+            <button class="btn btn-accent btn-full" style="margin-top:16px;">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════ CHAT FAB ══════════════════════════════ -->
+<div class="chat-fab" id="chatFab" style="display:none;" title="Chat">💬</div>
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<div class="footer">Derechos Reservados. TecnoGluc 2024</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+    let currentPage = 'login';
+    let connected = false;
+    let glucosaChart, presionChart;
+
+    function showPage(name) {
+        document.querySelectorAll('.page').forEach(p => {
+            p.classList.remove('active');
+            p.style.display = 'none';
+        });
+
+        const target = document.getElementById('page-' + name);
+        if (target) {
+            target.classList.add('active');
+            target.style.display = 'flex';
+            target.style.flexDirection = 'column';
+        }
+
+        const isAuth = name === 'login' || name === 'register';
+        document.getElementById('mainHeader').style.display = isAuth ? 'none' : 'flex';
+        document.getElementById('chatFab').style.display = isAuth ? 'none' : 'flex';
+
+        // Update nav active state
+        const btns = document.querySelectorAll('.nav-btn');
+        btns.forEach((b,i) => b.classList.remove('active'));
+        const map = {home:0, charts:1, profile:2};
+        if (map[name] !== undefined) btns[map[name]].classList.add('active');
+
+        currentPage = name;
+
+        if (name === 'charts') initCharts();
+    }
+
+    function doLogin() {
+        document.querySelectorAll('.page').forEach(p => {
+            p.classList.remove('active');
+            p.style.display = 'none';
+        });
+        document.getElementById('mainHeader').style.display = 'flex';
+        document.getElementById('chatFab').style.display = 'flex';
+
+        const home = document.getElementById('page-home');
+        home.style.display = 'flex';
+        home.style.flexDirection = 'column';
+        home.classList.add('active');
+        currentPage = 'home';
+        updateDatetime();
+    }
+
+    function toggleConnect() {
+        connected = !connected;
+        document.getElementById('statusOn').style.fontWeight = connected ? '900' : '400';
+        document.getElementById('statusOff').style.fontWeight = connected ? '400' : '900';
+    }
+
+    function updateGauge(val) {
+        const needle = document.getElementById('gaugeNeedle');
+        if (!needle) return;
+        // Normal glucose 70–140, critical >200
+        const pct = Math.min(Math.max((val - 60) / 200, 0), 1);
+        const deg = -90 + pct * 160;
+        needle.style.transform = `rotate(${deg}deg)`;
+    }
+
+    function saveReading() {
+        const alert = document.getElementById('saveAlert');
+        alert.style.display = 'block';
+        setTimeout(() => alert.style.display = 'none', 3000);
+    }
+
+    function updateDatetime() {
+        const el = document.getElementById('datetimeDisplay');
+        if (el) {
+            const now = new Date();
+            el.textContent = now.toLocaleString('es-MX');
+        }
+        setTimeout(updateDatetime, 1000);
+    }
+
+    function makeData(min, max) {
+        return Array.from({length: 6}, () => Math.floor(Math.random() * (max - min) + min));
+    }
+
+    function initCharts() {
+        const labels = ['Item 1','Item 2','Item 3','Item 4','Item 5','Item 6'];
+
+        if (glucosaChart) glucosaChart.destroy();
+        if (presionChart)  presionChart.destroy();
+
+        glucosaChart = new Chart(document.getElementById('glucosaChart'), {
+            type: 'bar',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Glucosa',
+                    data: makeData(70, 180),
+                    backgroundColor: 'rgba(144,190,109,0.7)',
+                    borderColor: '#90be6d',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
+        });
+
+        presionChart = new Chart(document.getElementById('presionChart'), {
+            type: 'bar',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Presión Sanguínea',
+                    data: makeData(60, 130),
+                    backgroundColor: 'rgba(230,57,70,0.6)',
+                    borderColor: '#e63946',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
+        });
+    }
+
+    function refreshCharts() { initCharts(); }
+
+    // Init
+    showPage('login');
+</script>
+</body>
+</html>
