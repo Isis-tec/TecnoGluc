@@ -6,502 +6,614 @@
     <title>TecnoGluc | Glucómetro Digital</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #4a7c6f;
-            --primary-dark: #2d5247;
-            --accent: #90be6d;
-            --accent-light: #c8e6b4;
-            --danger: #e63946;
-            --warning: #f4a261;
-            --bg: #f4f6f9;
-            --white: #ffffff;
-            --text: #1a1a2e;
-            --text-light: #555;
-            --card-bg: #e8e8e8;
-            --border: #ccc;
-            --shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Nunito', Arial, Helvetica, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ── HEADER ── */
-        .header {
-            background-color: var(--primary);
-            color: white;
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-circle {
-            width: 52px;
-            height: 52px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            border: 2px solid var(--accent);
-        }
-
-        .header-brand h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 8px;
-        }
-
-        .nav-btn {
-            background: rgba(255,255,255,0.15);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: rgba(255,255,255,0.35);
-            border-color: white;
-        }
-
-        /* ── SUBHEADER ── */
-        .subheader {
-            background-color: var(--accent);
-            padding: 10px 20px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            color: #1a1a1a;
-        }
-
-        /* ── MAIN CONTAINER ── */
-        .container {
-            width: 90%;
-            margin: 20px auto;
-            background: rgb(228, 212, 212);
-            padding: 24px;
-            box-shadow: var(--shadow);
-            flex: 1;
-        }
-
-        /* ── PAGES ── */
-        .page { display: none; }
-        .page.active { display: block; }
-
-        /* ── FORMS ── */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-            margin-bottom: 24px;
-        }
-
-        .info-grid label {
-            font-weight: bold;
-            font-size: 0.9rem;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .info-grid input {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid var(--border);
-            font-family: inherit;
-            font-size: 0.9rem;
-            background: white;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 6px;
-            font-size: 0.95rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid var(--border);
-            font-family: inherit;
-            font-size: 0.95rem;
-            border-radius: 6px;
-        }
-
-        /* ── BUTTONS ── */
-        .btn {
-            padding: 10px 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: background 0.2s;
-        }
-
-        .btn:hover { background-color: var(--primary-dark); }
-
-        .btn-accent {
-            background-color: var(--accent);
-            color: #1a1a1a;
-            border-radius: 6px;
-        }
-
-        .btn-accent:hover { background-color: #7aaa58; }
-
-        .btn-full { width: 100%; margin-top: 10px; border-radius: 6px; padding: 12px; }
-
-        .btn-link {
-            background: none;
-            border: none;
-            color: #4a6cf7;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .btn-link:hover { text-decoration: underline; }
-
-        /* ── LOGIN / REGISTER CARD ── */
-        .auth-card {
-            max-width: 520px;
-            margin: 30px auto;
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 36px 40px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .auth-card .logo-circle {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 12px auto;
-            font-size: 30px;
-            border: 3px solid var(--primary);
-        }
-
-        .auth-card h2 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-            color: var(--primary-dark);
-        }
-
-        .auth-card .subtitle {
-            font-weight: 700;
-            margin-bottom: 22px;
-            font-size: 0.95rem;
-            color: var(--text);
-        }
-
-        .auth-card .form-group { text-align: left; }
-
-        .auth-card .form-group input {
-            background: white;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .google-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: white;
-            border: 2px solid var(--border);
-            cursor: pointer;
-            font-size: 20px;
-            margin: 8px auto;
-            transition: box-shadow 0.2s;
-        }
-
-        .google-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-
-        .auth-footer {
-            margin-top: 14px;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        /* ── DEVICE / MEASUREMENT ── */
-        .device-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .device-row label { font-weight: bold; white-space: nowrap; }
-
-        .device-row input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            font-family: inherit;
-            background: var(--card-bg);
-        }
-
-        .status-badge {
-            padding: 6px 14px;
-            border-radius: 4px;
-            background: var(--card-bg);
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .status-on { color: var(--primary); }
-        .status-off { color: var(--danger); }
-
-        .measures-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .measure-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .measure-card .icon { font-size: 40px; margin-bottom: 8px; }
-        .measure-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
-
-        .measure-input-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .measure-input-row input {
-            width: 120px;
-            padding: 8px;
-            border: 1px solid var(--border);
-            text-align: center;
-            font-size: 1rem;
-            font-family: inherit;
-            background: white;
-            border-radius: 4px;
-        }
-
-        .measure-input-row span { font-weight: 600; font-size: 0.85rem; color: var(--text-light); }
-
-        /* Gauge */
-        .gauge-wrap { position: relative; width: 130px; margin: 0 auto; }
-
-        .gauge-wrap svg { width: 100%; }
-
-        .gauge-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-top: 2px;
-        }
-
-        .gauge-label .good { color: var(--primary); }
-        .gauge-label .critical { color: var(--danger); }
-
-        /* Datetime boxes */
-        .datetime-boxes {
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .dt-box {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: inline-block;
-        }
-
-        /* ── CHARTS PAGE ── */
-        .chart-section {
-            background: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        .chart-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .chart-header .chart-icon { font-size: 36px; margin-right: 10px; }
-
-        .refresh-btn {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--text);
-            transition: transform 0.4s;
-        }
-
-        .refresh-btn:hover { transform: rotate(180deg); }
-
-        .chart-info h3 { font-weight: 700; font-size: 1rem; }
-        .chart-info span { font-size: 0.8rem; color: var(--text-light); }
-
-        canvas { max-width: 100%; }
-
-        /* ── PROFILE PAGE ── */
-        .profile-card {
-            max-width: 560px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px 36px;
-            position: relative;
-        }
-
-        .profile-avatar {
-            text-align: center;
-            font-size: 64px;
-            margin-bottom: 10px;
-        }
-
-        .profile-refresh {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            transition: transform 0.4s;
-        }
-
-        .profile-refresh:hover { transform: rotate(180deg); }
-
-        .profile-field {
-            margin-bottom: 14px;
-        }
-
-        .profile-field label { font-weight: bold; display: block; margin-bottom: 4px; font-size: 0.9rem; }
-
-        .profile-field-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .profile-field-row input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            font-family: inherit;
-            background: white;
-            border-radius: 6px;
-        }
-
-        /* ── CHAT BUTTON ── */
-        .chat-fab {
-            position: fixed;
-            bottom: 70px;
-            right: 20px;
-            width: 54px;
-            height: 54px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-            transition: background 0.2s;
-            z-index: 100;
-        }
-
-        .chat-fab:hover { background: var(--primary-dark); }
-
-        /* ── FOOTER ── */
-        .footer {
-            text-align: center;
-            padding: 15px;
-            font-size: 14px;
-            color: var(--text-light);
-            background: white;
-            border-top: 1px solid var(--border);
-        }
-
-        /* ── TABLE (lista) ── */
-        table { width: 100%; border-collapse: collapse; }
-        table th { background-color: var(--accent); padding: 10px; border: 1px solid var(--border); }
-        table td { padding: 8px; border: 1px solid var(--border); text-align: center; }
-        table input { width: 95%; padding: 4px; }
-        table select { padding: 4px; font-family: inherit; }
-
-        /* ── ALERT ── */
-        .alert {
-            padding: 10px 16px;
-            border-radius: 6px;
-            margin-bottom: 14px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .alert-success { background: var(--accent-light); color: var(--primary-dark); }
-        .alert-danger  { background: #fde8ea; color: var(--danger); }
-
-        @media (max-width: 600px) {
-            .info-grid, .measures-grid { grid-template-columns: 1fr; }
-            .container { width: 98%; padding: 14px; }
-            .auth-card { padding: 24px 18px; }
-        }
+       :root {
+    --primary: #4a7c6f;
+    --primary-dark: #2d5247;
+    --accent: #90be6d;
+    --accent-light: #c8e6b4;
+    --danger: #e63946;
+    --warning: #f4a261;
+    --bg: #f4f6f9;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --text-light: #555;
+    --card-bg: #e8e8e8;
+    --border: #ccc;
+    --shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* MODELO DE CAJA: reset universal que afecta a todos los elementos */
+* { 
+    box-sizing: border-box; /* El padding y border se incluyen dentro del ancho/alto total */
+    margin: 0;              /* Elimina márgenes por defecto */
+    padding: 0;             /* Elimina rellenos por defecto */
+}
+
+body {
+    font-family: 'Nunito', Arial, Helvetica, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    /* MODELO DE CAJA: display flex también afecta al modelo de caja de los elementos hijos */
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── HEADER ── */
+.header {
+    background-color: var(--primary);
+    color: white;
+    /* MODELO DE CAJA: padding (relleno interior) */
+    padding: 12px 24px;     /* Superior/inferior 12px, izquierda/derecha 24px */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    /* MODELO DE CAJA: gap separa los elementos hijos sin usar margin */
+    gap: 12px;              /* Espacio entre el logo y el título */
+}
+
+.logo-circle {
+    width: 52px;            /* MODELO DE CAJA: ancho definido */
+    height: 52px;           /* MODELO DE CAJA: alto definido */
+    background: white;
+    /* MODELO DE CAJA: border-radius afecta al borde */
+    border-radius: 50%;     /* Hace un círculo perfecto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    /* MODELO DE CAJA: border agrega un borde alrededor */
+    border: 2px solid var(--accent); /* Borde sólido de 2px */
+}
+
+.header-brand h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.header-nav {
+    display: flex;
+    /* MODELO DE CAJA: separación entre botones */
+    gap: 8px;               /* Espacio entre elementos del nav */
+}
+
+.nav-btn {
+    background: rgba(255,255,255,0.15);
+    /* MODELO DE CAJA: borde de 2px */
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    /* MODELO DE CAJA: dimensiones del botón */
+    width: 44px;            /* Ancho fijo */
+    height: 44px;           /* Alto fijo */
+    /* MODELO DE CAJA: border-radius para hacerlo circular */
+    border-radius: 50%;     /* Botones circulares */
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.nav-btn:hover, .nav-btn.active {
+    background: rgba(255,255,255,0.35);
+    border-color: white;    /* Cambia el color del borde */
+}
+
+/* ── SUBHEADER ── */
+.subheader {
+    background-color: var(--accent);
+    /* MODELO DE CAJA: padding interior */
+    padding: 10px 20px;     /* Espaciado interno */
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+}
+
+/* ── MAIN CONTAINER ── */
+.container {
+    width: 90%;             /* MODELO DE CAJA: ancho relativo al contenedor padre */
+    /* MODELO DE CAJA: margin automático para centrar */
+    margin: 20px auto;      /* Superior/inferior 20px, auto izquierda/derecha centra */
+    background: rgb(228, 212, 212);
+    /* MODELO DE CAJA: padding interior */
+    padding: 24px;          /* Relleno en todos los lados */
+    /* MODELO DE CAJA: box-shadow es una extensión visual del modelo de caja */
+    box-shadow: var(--shadow); /* Sombra exterior */
+    flex: 1;
+}
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── FORMS ── */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* MODELO DE CAJA: separación entre celdas de la grid */
+    gap: 18px;              /* Espacio entre elementos del grid */
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 24px;    /* Separación con elementos siguientes */
+}
+
+.info-grid label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: block;
+    /* MODELO DE CAJA: margen inferior para separar del input */
+    margin-bottom: 4px;     /* Pequeño espacio antes del input */
+}
+
+.info-grid input {
+    width: 100%;            /* MODELO DE CAJA: ancho completo del contenedor */
+    /* MODELO DE CAJA: padding interior */
+    padding: 8px 10px;      /* Relleno interno del input */
+    /* MODELO DE CAJA: borde de 1px */
+    border: 1px solid var(--border);
+    font-family: inherit;
+    font-size: 0.9rem;
+    background: white;
+    /* El box-sizing: border-box heredado asegura que width incluya padding y border */
+}
+
+.form-group {
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 16px;    /* Separación entre grupos de formulario */
+}
+
+.form-group label {
+    font-weight: bold;
+    display: block;
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 6px;     /* Espacio entre label e input */
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;            /* MODELO DE CAJA: ancho completo */
+    /* MODELO DE CAJA: padding interior */
+    padding: 10px 14px;     /* Relleno interno */
+    /* MODELO DE CAJA: borde de 1px */
+    border: 1px solid var(--border);
+    font-family: inherit;
+    font-size: 0.95rem;
+    /* MODELO DE CAJA: border-radius redondea las esquinas */
+    border-radius: 6px;     /* Esquinas redondeadas */
+}
+
+/* ── BUTTONS ── */
+.btn {
+    /* MODELO DE CAJA: padding interior */
+    padding: 10px 20px;     /* Relleno del botón */
+    background-color: var(--primary);
+    color: white;
+    /* MODELO DE CAJA: sin borde (elimina borde por defecto) */
+    border: none;           /* Sin borde visible pero sigue siendo parte del box model */
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.btn:hover { background-color: var(--primary-dark); }
+
+.btn-accent {
+    background-color: var(--accent);
+    color: #1a1a1a;
+    /* MODELO DE CAJA: border-radius redondea las esquinas */
+    border-radius: 6px;     /* Esquinas redondeadas */
+}
+
+.btn-full { 
+    width: 100%;            /* MODELO DE CAJA: ancho completo */
+    /* MODELO DE CAJA: margen superior */
+    margin-top: 10px;       /* Espacio superior */
+    border-radius: 6px;     /* MODELO DE CAJA: bordes redondeados */
+    /* MODELO DE CAJA: padding extra */
+    padding: 12px;          /* Relleno uniforme */
+}
+
+.btn-link {
+    background: none;
+    border: none;           /* Sin borde */
+    color: #4a6cf7;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-link:hover { text-decoration: underline; }
+
+/* ── LOGIN / REGISTER CARD ── */
+.auth-card {
+    max-width: 520px;       /* MODELO DE CAJA: ancho máximo */
+    /* MODELO DE CAJA: margin auto centra horizontalmente */
+    margin: 30px auto;      /* Superior/inferior 30px, auto centra */
+    background: var(--card-bg);
+    /* MODELO DE CAJA: border-radius para bordes redondeados */
+    border-radius: 12px;    /* Esquinas redondeadas */
+    /* MODELO DE CAJA: padding interior */
+    padding: 36px 40px;     /* Relleno interno amplio */
+    text-align: center;
+    /* MODELO DE CAJA: box-shadow para dar profundidad */
+    box-shadow: var(--shadow); /* Sombra exterior */
+}
+
+.auth-card .logo-circle {
+    width: 72px;            /* MODELO DE CAJA: ancho */
+    height: 72px;           /* MODELO DE CAJA: alto */
+    /* MODELO DE CAJA: margin auto centra horizontalmente */
+    margin: 0 auto 12px auto; /* Superior 0, auto centra, inferior 12px */
+    font-size: 30px;
+    /* MODELO DE CAJA: borde más grueso */
+    border: 3px solid var(--primary);
+}
+
+.auth-card h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 4px;     /* Espacio antes del subtítulo */
+    color: var(--primary-dark);
+}
+
+.auth-card .subtitle {
+    font-weight: 700;
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 22px;    /* Espacio antes del formulario */
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.auth-card .form-group { text-align: left; }
+
+.auth-card .form-group input {
+    background: white;
+    border-radius: 8px;     /* MODELO DE CAJA: bordes redondeados */
+    border: 1px solid var(--border);
+}
+
+.google-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* MODELO DE CAJA: dimensiones fijas */
+    width: 40px;            /* Ancho */
+    height: 40px;           /* Alto */
+    /* MODELO DE CAJA: border-radius circular */
+    border-radius: 50%;     /* Botón circular */
+    background: white;
+    /* MODELO DE CAJA: borde de 2px */
+    border: 2px solid var(--border);
+    cursor: pointer;
+    font-size: 20px;
+    /* MODELO DE CAJA: margen para centrar */
+    margin: 8px auto;       /* Superior/inferior 8px, auto centra */
+    transition: box-shadow 0.2s;
+}
+
+.google-btn:hover { 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Sombra exterior */
+}
+
+.auth-footer {
+    /* MODELO DE CAJA: margen superior */
+    margin-top: 14px;       /* Espacio superior */
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* ── DEVICE / MEASUREMENT ── */
+.device-row {
+    display: flex;
+    align-items: center;
+    /* MODELO DE CAJA: separación entre elementos */
+    gap: 12px;              /* Espacio entre label e input */
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 16px;    /* Separación entre filas */
+}
+
+.device-row label { font-weight: bold; white-space: nowrap; }
+
+.device-row input {
+    flex: 1;
+    /* MODELO DE CAJA: padding interior */
+    padding: 8px 12px;      /* Relleno interno */
+    /* MODELO DE CAJA: borde de 1px */
+    border: 1px solid var(--border);
+    font-family: inherit;
+    background: var(--card-bg);
+}
+
+.status-badge {
+    /* MODELO DE CAJA: padding interior */
+    padding: 6px 14px;      /* Relleno */
+    /* MODELO DE CAJA: border-radius */
+    border-radius: 4px;     /* Esquinas ligeramente redondeadas */
+    background: var(--card-bg);
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    /* MODELO DE CAJA: separación entre elementos internos */
+    gap: 6px;               /* Espacio entre ícono y texto */
+    align-items: center;
+}
+
+.status-on { color: var(--primary); }
+.status-off { color: var(--danger); }
+
+.measures-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* MODELO DE CAJA: separación entre tarjetas */
+    gap: 20px;              /* Espacio entre elementos del grid */
+    /* MODELO DE CAJA: márgenes verticales */
+    margin: 20px 0;         /* Superior/inferior 20px */
+}
+
+.measure-card {
+    background: var(--card-bg);
+    border-radius: 8px;     /* MODELO DE CAJA: bordes redondeados */
+    /* MODELO DE CAJA: padding interior */
+    padding: 20px;          /* Relleno uniforme */
+    text-align: center;
+}
+
+.measure-card .icon { font-size: 40px; margin-bottom: 8px; }
+.measure-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
+
+.measure-input-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* MODELO DE CAJA: separación entre elementos */
+    gap: 8px;               /* Espacio entre input y span */
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 12px;    /* Espacio antes del gráfico */
+}
+
+.measure-input-row input {
+    width: 120px;           /* MODELO DE CAJA: ancho fijo */
+    /* MODELO DE CAJA: padding interior */
+    padding: 8px;           /* Relleno interno */
+    /* MODELO DE CAJA: borde de 1px */
+    border: 1px solid var(--border);
+    text-align: center;
+    font-size: 1rem;
+    font-family: inherit;
+    background: white;
+    border-radius: 4px;     /* MODELO DE CAJA: bordes redondeados */
+}
+
+.measure-input-row span { font-weight: 600; font-size: 0.85rem; color: var(--text-light); }
+
+/* Gauge */
+.gauge-wrap { 
+    position: relative; 
+    width: 130px;           /* MODELO DE CAJA: ancho fijo */
+    /* MODELO DE CAJA: margin auto centra horizontalmente */
+    margin: 0 auto;         /* Centrado */
+}
+
+.gauge-wrap svg { width: 100%; }
+
+.gauge-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 700;
+    /* MODELO DE CAJA: margen superior */
+    margin-top: 2px;        /* Pequeño espacio superior */
+}
+
+.gauge-label .good { color: var(--primary); }
+.gauge-label .critical { color: var(--danger); }
+
+/* Datetime boxes */
+.datetime-boxes {
+    display: flex;
+    /* MODELO DE CAJA: separación entre cajas */
+    gap: 6px;               /* Espacio entre boxes */
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.dt-box {
+    width: 36px;            /* MODELO DE CAJA: ancho */
+    height: 36px;           /* MODELO DE CAJA: alto */
+    border-radius: 50%;     /* MODELO DE CAJA: circulares */
+    background: var(--primary);
+    display: inline-block;
+}
+
+/* ── CHARTS PAGE ── */
+.chart-section {
+    background: var(--card-bg);
+    border-radius: 8px;     /* MODELO DE CAJA: bordes redondeados */
+    /* MODELO DE CAJA: padding interior */
+    padding: 20px;          /* Relleno interno */
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 24px;    /* Separación entre secciones */
+    position: relative;
+}
+
+.chart-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 12px;    /* Espacio antes del canvas */
+}
+
+.chart-header .chart-icon { font-size: 36px; margin-right: 10px; }
+
+.refresh-btn {
+    background: none;
+    border: none;           /* Sin borde */
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text);
+    transition: transform 0.4s;
+}
+
+.refresh-btn:hover { transform: rotate(180deg); }
+
+.chart-info h3 { font-weight: 700; font-size: 1rem; }
+.chart-info span { font-size: 0.8rem; color: var(--text-light); }
+
+canvas { max-width: 100%; }
+
+/* ── PROFILE PAGE ── */
+.profile-card {
+    max-width: 560px;       /* MODELO DE CAJA: ancho máximo */
+    /* MODELO DE CAJA: margin auto centra */
+    margin: 0 auto;         /* Centrado horizontal */
+    background: var(--card-bg);
+    border-radius: 12px;    /* MODELO DE CAJA: bordes redondeados */
+    /* MODELO DE CAJA: padding interior */
+    padding: 30px 36px;     /* Relleno interno */
+    position: relative;
+}
+
+.profile-avatar {
+    text-align: center;
+    font-size: 64px;
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 10px;    /* Espacio antes del contenido */
+}
+
+.profile-refresh {
+    position: absolute;
+    top: 16px;              /* Posicionamiento desde el borde superior */
+    right: 16px;            /* Posicionamiento desde el borde derecho */
+    background: none;
+    border: none;           /* Sin borde */
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.4s;
+}
+
+.profile-refresh:hover { transform: rotate(180deg); }
+
+.profile-field {
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 14px;    /* Separación entre campos */
+}
+
+.profile-field label { font-weight: bold; display: block; margin-bottom: 4px; font-size: 0.9rem; }
+
+.profile-field-row {
+    display: flex;
+    align-items: center;
+    /* MODELO DE CAJA: separación entre elementos */
+    gap: 10px;              /* Espacio entre label e input */
+}
+
+.profile-field-row input {
+    flex: 1;
+    /* MODELO DE CAJA: padding interior */
+    padding: 8px 12px;      /* Relleno interno */
+    /* MODELO DE CAJA: borde de 1px */
+    border: 1px solid var(--border);
+    font-family: inherit;
+    background: white;
+    border-radius: 6px;     /* MODELO DE CAJA: bordes redondeados */
+}
+
+/* ── CHAT BUTTON ── */
+.chat-fab {
+    position: fixed;
+    bottom: 70px;           /* Posicionamiento desde abajo */
+    right: 20px;            /* Posicionamiento desde la derecha */
+    /* MODELO DE CAJA: dimensiones fijas */
+    width: 54px;            /* Ancho */
+    height: 54px;           /* Alto */
+    background: var(--primary);
+    border-radius: 50%;     /* MODELO DE CAJA: circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    /* MODELO DE CAJA: box-shadow para elevación */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* Sombra */
+    transition: background 0.2s;
+    z-index: 100;
+}
+
+.chat-fab:hover { background: var(--primary-dark); }
+
+/* ── FOOTER ── */
+.footer {
+    text-align: center;
+    /* MODELO DE CAJA: padding interior */
+    padding: 15px;          /* Relleno interno */
+    font-size: 14px;
+    color: var(--text-light);
+    background: white;
+    /* MODELO DE CAJA: borde superior */
+    border-top: 1px solid var(--border); /* Línea separadora */
+}
+
+/* ── TABLE (lista) ── */
+table { 
+    width: 100%;            /* MODELO DE CAJA: ancho completo */
+    border-collapse: collapse; /* Modelo de bordes colapsados */
+}
+table th { 
+    background-color: var(--accent); 
+    /* MODELO DE CAJA: padding interior */
+    padding: 10px;          /* Relleno en celdas de encabezado */
+    /* MODELO DE CAJA: borde en celdas */
+    border: 1px solid var(--border); 
+}
+table td { 
+    /* MODELO DE CAJA: padding interior */
+    padding: 8px;           /* Relleno en celdas de datos */
+    /* MODELO DE CAJA: borde en celdas */
+    border: 1px solid var(--border); 
+    text-align: center; 
+}
+table input { 
+    width: 95%;             /* MODELO DE CAJA: ancho relativo */
+    /* MODELO DE CAJA: padding interior */
+    padding: 4px;           /* Relleno interno */
+}
+table select { 
+    /* MODELO DE CAJA: padding interior */
+    padding: 4px;           /* Relleno interno */
+    font-family: inherit; 
+}
+
+/* ── ALERT ── */
+.alert {
+    /* MODELO DE CAJA: padding interior */
+    padding: 10px 16px;     /* Relleno interno */
+    border-radius: 6px;     /* MODELO DE CAJA: bordes redondeados */
+    /* MODELO DE CAJA: margen inferior */
+    margin-bottom: 14px;    /* Separación inferior */
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.alert-success { background: var(--accent-light); color: var(--primary-dark); }
+.alert-danger  { background: #fde8ea; color: var(--danger); }
+
+@media (max-width: 600px) {
+    .info-grid, .measures-grid { grid-template-columns: 1fr; }
+    .container { width: 98%; padding: 14px; }
+    .auth-card { padding: 24px 18px; }
+}
     </style>
 </head>
 <body>
